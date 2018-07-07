@@ -58,5 +58,5 @@ finaldf<-newdf1%>%
   group_by(subject,activity)%>%
   summarise_all(funs(mean))
 
-write.table(finaldf,"C:\\Users\\MyPc\\Desktop\\pooja\\data\\UCI HAR Dataset\\finaldata.txt")
+write.table(finaldf,"C:\\Users\\DELL\\Desktop\\POOJAA\\Getting-and-cleaning-data\\finaldata.txt")
 
