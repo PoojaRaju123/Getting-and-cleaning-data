@@ -1,6 +1,7 @@
 
 ##setting the directory
 setwd("C:\\Users\\DELL\\Desktop\\POOJAA\\Getting-and-cleaning-data")
+library(dplyr)
 ## Reading the necessary data
 test_X <- read.table("C:\\Users\\DELL\\Desktop\\POOJAA\\Getting-and-cleaning-data\\test\\X_test.txt")
 train_Y<- read.table("C:\\Users\\DELL\\Desktop\\POOJAA\\Getting-and-cleaning-data\\train\\X_train.txt")
@@ -27,7 +28,7 @@ subject<-df1$V1
 newdf1<-cbind(subject,newdf1)
 newdf1$activity<-as.character(newdf1$activity)
 
-## redefining the names of activities
+##  step 3: redefining the names of activities
 newdf1$activity[newdf1$activity=="1"]<-"walking"
 newdf1$activity[newdf1$activity=="2"]<-"walking-upstairs"
 newdf1$activity[newdf1$activity=="3"]<-"walking-downstairs"
@@ -35,7 +36,7 @@ newdf1$activity[newdf1$activity=="4"]<-"sitting"
 newdf1$activity[newdf1$activity=="5"]<-"standing"
 newdf1$activity[newdf1$activity=="6"]<-"laying"
 
-## Starting the process for changing the column names to descriptive ones
+## step 4 : Starting the process for changing the column names to descriptive ones
 f<-feature$V2
 f<-f[c(1:6,41:46,81:86,121:126,161:166,201,202,214,215,227,228,240,241,253,254,266:271,345:350,424,425:429,503,504,516,517,529,530,542,543)]
 d<-as.vector(f)
@@ -52,3 +53,10 @@ p<-gsub("std", "Std", o)
 a<-colnames(newdf1[,-c(1,2)])
 a<-p
 colnames(newdf1)<-c("subject","activity",p)
+## step 5
+finaldf<-newdf1%>%
+  group_by(subject,activity)%>%
+  summarise_all(funs(mean))
+
+write.table(finaldf,"C:\\Users\\MyPc\\Desktop\\pooja\\data\\UCI HAR Dataset\\finaldata.txt")
+
